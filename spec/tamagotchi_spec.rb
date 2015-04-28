@@ -26,4 +26,29 @@ describe(Tamagotchi) do
       expect(test_pet.age()).to(eq("00:03"))
     end
   end
+
+  describe("#update_pet") do
+    it("changes various attributes of a tamagotchi based on time passing") do
+      test_pet = Tamagotchi.new("big dragon")
+      sleep(5)
+      test_pet.update_pet()
+      expect(test_pet.age()).to(eq("00:05"))
+      expect(test_pet.food_level()).to(eq(9.5))
+    end
+  end
+
+  describe("#feed_pet") do
+      it("feeds the pet one food") do
+        test_pet = Tamagotchi.new("big dragon")
+        sleep(10)
+        test_pet.update_pet()
+        test_pet.feed_pet()
+        expect(test_pet.food_level()).to(eq(10))
+      end
+      it("does not feed a pet with at least 10 food") do
+        test_pet = Tamagotchi.new("big dragon")
+        test_pet.feed_pet()
+        expect(test_pet.food_level()).to(eq(10))
+      end
+  end
 end

@@ -6,6 +6,7 @@ class Tamagotchi
     @sleep_level = 10
     @activity_level = 10
     @birth_date = Time.new()
+    @last_update = [@birth_date.min, @birth_date.sec]
   end
 
   define_method(:name) do
@@ -35,5 +36,20 @@ class Tamagotchi
     minutes = age_min < 10 ? "0#{age_min}" : "#{age_min}"
     seconds = age_sec < 10 ? "0#{age_sec}" : "#{age_sec}"
     statement = "#{minutes}:#{seconds}"
+  end
+
+  define_method(:update_pet) do
+    current_time = Time.new()
+    min_since_update = current_time.min - @last_update[0]
+    sec_since_update = current_time.sec - @last_update[1]
+    @last_update = [current_time.min, current_time.sec]
+    @food_level = @food_level - ((min_since_update * 6) + (sec_since_update / 10.0))
+
+  end
+
+  define_method(:feed_pet) do
+    if @food_level < 10
+      @food_level += 1
+    end
   end
 end
