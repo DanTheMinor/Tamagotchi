@@ -2,6 +2,9 @@ require('rspec')
 require('tamagotchi')
 
 describe(Tamagotchi) do
+  before() do
+    Tamagotchi.clear()
+  end
   describe("#initialize") do
     it("sets the name, food levels, sleep levels and activity levels of tamagotchi") do
       test_pet = Tamagotchi.new("big dragon")
@@ -41,12 +44,12 @@ describe(Tamagotchi) do
   #       test_pet = Tamagotchi.new("big dragon")
   #       sleep(10)
   #       test_pet.update_pet()
-  #       test_pet.feed_pet()
+  #       test_pet.feed_pet(1)
   #       expect(test_pet.food_level()).to(eq(10))
   #     end
   #     it("does not feed a pet with at least 10 food") do
   #       test_pet = Tamagotchi.new("big dragon")
-  #       test_pet.feed_pet()
+  #       test_pet.feed_pet(1)
   #       expect(test_pet.food_level()).to(eq(10))
   #     end
   # end

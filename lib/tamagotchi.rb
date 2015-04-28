@@ -1,12 +1,14 @@
 class Tamagotchi
 
+  @@tamagotchis = []
+
   define_method(:initialize) do |name|
     @name = name
     @food_level = 10
     @sleep_level = 10
     @activity_level = 10
     @birth_date = Time.new()
-    @last_update = [@birth_date.min, @birth_date.sec]
+    @last_update = @birth_date
   end
 
   define_method(:name) do
@@ -31,35 +33,52 @@ class Tamagotchi
 
   define_method(:age) do
     current_time = Time.new()
-    age_min = current_time.min - @birth_date.min
-    age_sec = current_time.sec - @birth_date.sec
-    minutes = age_min < 10 ? "0#{age_min}" : "#{age_min}"
-    seconds = age_sec < 10 ? "0#{age_sec}" : "#{age_sec}"
-    statement = "#{minutes}:#{seconds}"
+    age = current_time - @birth_date
   end
 
   define_method(:update_pet) do
     current_time = Time.new()
-    min_since_update = current_time.min - @last_update[0]
-    sec_since_update = current_time.sec - @last_update[1]
-    @last_update = [current_time.min, current_time.sec]
-    @food_level = @food_level - ((min_since_update * 6) + (sec_since_update / 10.0))
-
+    time_elapsed = current_time - @last_update
+    @last_update = current_time
+    @food_level -= time_elapsed/10.0
   end
 
-  define_method(:feed_pet) do
-    if @food_level < 10
-      @food_level += 1
+  define_method(:feed_pet) do |amount|
+    if (@food_level + amount) > 10
+      @food_level = 10
+    else
+      @food_level += amount
     end
   end
 
   define_method(:is_alive?) do
     enough_food = @food_level > 0
-    young = self.age()[0..1].to_i == 0
+    young = age < 60
     enough_food && young
   end
 
   define_method(:take_food) do |amount|
     @food_level -= amount
   end
+
+  define_singleton_method(:all) do
+    @@tamagotchis
+  end
+
+  define_method(:save) do
+    @@tamagotchis.push(self)
+  end
+
+  define_singleton_method(:clear) do
+    @@tamagotchis = []
+  end
+
+  define_singleton_method(:delete) do |name|
+    @@tamagotchis.each() do |tama|
+      if tama.name() == name
+        @@tamagotchis.delete(tama)
+      end
+    end
+  end
+
 end

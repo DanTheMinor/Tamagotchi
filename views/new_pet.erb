@@ -1,0 +1,9 @@
+<h1>You created a <%= @a_pet.name() %> Tamagotchi</h1>
+<ul>
+  <li>Age: <%=  sprintf "%.1f", @a_pet.age() %></li>
+  <li>Food: <%= sprintf "%.2f", @a_pet.food_level() %></li>
+  <li>Alive: <%= @a_pet.is_alive?() %> </li>
+  <!--add food form-->
+</ul>
+<a href='/new_pet'>Update</a>
+<!--go to pet cemetary after alive == false-->
