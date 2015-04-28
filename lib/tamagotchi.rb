@@ -52,4 +52,15 @@ class Tamagotchi
       @food_level += 1
     end
   end
+
+  define_method(:is_alive?) do
+    if self.age()[0..1].to_i > 0
+      return false
+    end
+    @food_level > 0
+  end
+
+  define_method(:take_food) do |amount|
+    @food_level -= amount
+  end
 end
