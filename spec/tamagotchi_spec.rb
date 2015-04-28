@@ -10,6 +10,13 @@ describe(Tamagotchi) do
       expect(test_pet.sleep_level()).to(eq(10))
       expect(test_pet.activity_level()).to(eq(10))
     end
+
+    it("sets the birth date to the current time") do
+      test_pet = Tamagotchi.new("big dragon")
+      current_time = Time.new()
+      expect(test_pet.birth_date()).to(eq("#{current_time.hour()}:#{current_time.min()}"))
+    end
+
   end
 
 end
