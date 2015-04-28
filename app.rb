@@ -26,5 +26,10 @@ get('/new_pet') do
   @a_pet = Tamagotchi.all()[0]
   @a_pet.update_pet()
   @a_pet.save()
-  erb(:new_pet)
+  if @a_pet.is_alive?()
+    erb(:new_pet)
+  else
+    Tamagotchi.clear()
+    erb(:cemetary)
+  end
 end
